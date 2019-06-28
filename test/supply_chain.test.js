@@ -62,7 +62,7 @@ contract('SupplyChain', function(accounts) {
 
         var aliceBalanceAfter = await web3.eth.getBalance(alice)
         var bobBalanceAfter = await web3.eth.getBalance(bob)
-
+        
         const result = await instance.fetchItem.call(0)
 
         assert.equal(result[3].toString(10), 1, 'the state of the item should be "Sold", which should be declared second in the State Enum')
