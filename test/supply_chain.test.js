@@ -55,16 +55,21 @@ contract('SupplyChain', function(accounts) {
     it("should allow someone to purchase an item and update state accordingly", async() => {
 
         await instance.addItem(name, price, {from: alice})
+
         var aliceBalanceBefore = await web3.eth.getBalance(alice)
         var bobBalanceBefore = await web3.eth.getBalance(bob)
+        
 
         await instance.buyItem(0, {from: bob, value: excessAmount})
-
+        
         var aliceBalanceAfter = await web3.eth.getBalance(alice)
         var bobBalanceAfter = await web3.eth.getBalance(bob)
         
+        
         const result = await instance.fetchItem.call(0)
+        
 
+        
         assert.equal(result[3].toString(10), 1, 'the state of the item should be "Sold", which should be declared second in the State Enum')
         assert.equal(result[5], bob, 'the buyer address should be set bob when he purchases an item')
         assert.equal(new BN(aliceBalanceAfter).toString(), new BN(aliceBalanceBefore).add(new BN(price)).toString(), "alice's balance should be increased by the price of the item")
